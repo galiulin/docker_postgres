@@ -2,6 +2,14 @@ version: '3.9'
 services:
   postgresqldb:
     image: 'postgres:11.5'
+    command: 
+      - "postgres"
+      - "-c"
+      - "shared_preload_libraries=pg_stat_statements"
+      - "-c"
+      - "pg_stat_statements.max=10000"
+      - "-c"
+      - "pg_stat_statements.track=all"
     container_name: postgresql_db
     ports:
       - 5432:5432
@@ -26,4 +34,5 @@ services:
   #      limits:
   #        cpus: '1'
   #        memory: 4G  
+    
     
