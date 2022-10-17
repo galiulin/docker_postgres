@@ -1,0 +1,29 @@
+version: '3.9'
+services:
+  postgresqldb:
+    image: 'postgres:11.5'
+    container_name: postgresql_db
+    ports:
+      - 5432:5432
+    environment:
+       POSTGRES_PASSWORD: postgres
+       POSTGRES_USER: postgres
+       POSTGRES_DB: postgres
+       PGDATA: /var/lib/postgresql/data/pgdata
+       TZ: 'Europe/Moscow'
+       PGTZ: 'Europe/Moscow'
+    restart: always
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data/pgdata
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+  #  deploy:
+  #    resources:
+  #      limits:
+  #        cpus: '1'
+  #        memory: 4G  
+    
